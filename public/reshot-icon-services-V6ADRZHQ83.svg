@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Services" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+<circle id="Background_24_" fill="#7F499C" cx="256" cy="256" r="256"/>
+<path id="Shadow_25_" opacity="0.1" d="M511.706,268.147l-83.264-81.667l-49.775,1.187l-58.163-40.064L196.333,151l-8.667,79.53
+	L84,235l61.163,61.164l-49.337,71.997l144.016,143.316C245.187,511.811,250.571,512,256,512
+	C393.312,512,505.363,403.891,511.706,268.147z"/>
+<g>
+	<rect x="95.969" y="210.207" fill-rule="evenodd" clip-rule="evenodd" fill="#FAA22F" width="320.063" height="158.104"/>
+	<rect x="95.969" y="226.275" fill-rule="evenodd" clip-rule="evenodd" fill="#D88D29" width="320.063" height="15.104"/>
+	<rect x="83.917" y="187.071" fill-rule="evenodd" clip-rule="evenodd" fill="#EFB742" width="344.165" height="48.542"/>
+	<g>
+		<rect x="241.5" y="212.456" fill-rule="evenodd" clip-rule="evenodd" fill="#3E3C5D" width="29" height="57.844"/>
+		<rect x="249.011" y="226.275" fill-rule="evenodd" clip-rule="evenodd" fill="#D1D3D4" width="13.497" height="37.92"/>
+		<rect x="249.011" y="217.6" fill-rule="evenodd" clip-rule="evenodd" fill="#D1D3D4" width="13.497" height="4.773"/>
+		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#D1D3D4" cx="243.809" cy="214.908" r="1.265"/>
+		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#D1D3D4" cx="268.09" cy="214.908" r="1.266"/>
+		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#D1D3D4" cx="243.809" cy="268.29" r="1.265"/>
+		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#D1D3D4" cx="268.09" cy="268.29" r="1.266"/>
+	</g>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#3E3C5D" d="M197.504,187.071v-17.566c0-8.258,6.693-14.952,14.95-14.952
+		h87.091c8.257,0,14.951,6.694,14.951,14.952v17.566h13.162v-25.065c0-10.115-8.198-18.316-18.316-18.316H202.656
+		c-10.117,0-18.316,8.201-18.316,18.316v25.065H197.504z"/>
+</g>
+</svg>
