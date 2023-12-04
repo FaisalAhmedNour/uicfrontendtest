@@ -12,6 +12,7 @@ import {
 import BuyersListTable from "./BuyersListTable/BuyersListTable";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { createBuyers } from "../../../Services/AuthService";
 
 const countries = ["USA", "UK", "SA", "UAE", "MEX"];
 
@@ -24,32 +25,51 @@ const BuyerSetup = () => {
 
     const [selectedCountry, setSelectedCountry] = useState('')
     const [isActive, setIsActive] = useState("No")
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
 
     }, [])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.buyer_name.value;
         const short_code = e.target.short_code.value;
         console.log(token);
-        
-        fetch('http://api.uicommercial.com/api/create_buyer', {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                'Authorization': `${token}`
-            },
-            body: JSON.stringify({ name, short_code, country: selectedCountry, is_active: isActive })
-        })
-            .then(result => result.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+
+        try {
+            const result = await createBuyers({ name, short_code, is_active: isActive, country: selectedCountry });
+            console.log(result);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+
+        // fetch('http://api.uicommercial.com/api/create_buyer', {
+        //     method: "POST",
+        //     headers: {
+        //         "content-type": "application/json",
+        //         'Authorization': `Bearer ${token}`
+        //     },
+        //     body: JSON.stringify({ name, short_code, country: selectedCountry, is_active: isActive })
+        // })
+        //     .then(result => result.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     })
+    }
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
     }
 
     return (

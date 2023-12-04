@@ -25,17 +25,6 @@ const AuthProvider = ({ children }) => {
         return null;
     }
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         setLoading(true)
-    //         const userData = await localStorage.getItem('loginData');
-    //         const user = JSON.parse(userData)
-    //         setUser(user);
-    //         setLoading(false)
-    //     }
-    //     fetchData()
-    // }, [])
-
     const authInfo = {
         user,
         loading,

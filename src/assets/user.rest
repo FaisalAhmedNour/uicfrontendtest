@@ -1,0 +1,11 @@
+@root =http://localhost:3001
+# @name login
+
+POST {{root}}/api/pub/login
+Content-Type: application/json
+
+{
+    "email":"istyak1196092ndcm@gamil.com",
+    "password":"123456789"
+}
+### #Register

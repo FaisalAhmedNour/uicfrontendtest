@@ -1,4 +1,3 @@
-
 import {
     Button,
     FormControl,
@@ -6,54 +5,83 @@ import {
     Radio,
     RadioGroup,
     TextField,
-    FormGroup,
-    Checkbox,
     MenuItem,
     Select,
     InputLabel
 } from "@mui/material";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
-import BuyersListTable from "../BuyerSetup/BuyersListTable/BuyersListTable";
+import { useEffect, useState } from "react";
+import ProcessListTable from "./ProcessListTable/ProcessListTable";
+import { createProcess, getServices } from "../../../Services/AuthService";
 
 const ProcessSetup = () => {
 
-    const { getCookie } = useContext(AuthContext);
-
-    const token = getCookie('auth_token');
-    console.log(token);
-
+    const [services, setServices] = useState('');
+    const [selectedServices, setSelectedServices] = useState('');
     const [isActive, setIsActive] = useState("No")
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getServices();
+                setServices(result.data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const name = e.target.service_name.value;
-        const caption = e.target.caption.value;
-        const remarks = e.target.remarks.value;
+        const name = e.target.process_name.value;
+        const domain = e.target.domain.value;
+        const default_quantity = e.target.default_quantity.value;
         const service_type = "test";
-        console.log(name, caption, service_type, isActive);
+        console.log(name, service_type, domain, isActive, default_quantity);
 
-        fetch('http://api.uicommercial.com/api/create_service', {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                'Authorization': token
-            },
-            body: JSON.stringify({ name, caption, service_type, is_active: isActive, remarks })
-        })
-            .then(result => result.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        try {
+            const result = await createProcess({ name, service_type, domain, is_active: isActive, default_quantity });
+            console.log(result);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+
+        // fetch('http://api.uicommercial.com/api/create_service', {
+        //     method: "POST",
+        //     headers: {
+        //         "content-type": "application/json",
+        //         'Authorization': `Bearer ${token}`
+        //     },
+        //     body: JSON.stringify({ name, caption, service_type, is_active: isActive, remarks })
+        // })
+        //     .then(result => result.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     })
+    }
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
     }
 
     return (
         <div>
-            <from className="grid grid-cols-5 gap-5">
-                <div onSubmit={handleSubmit} className="col-span-3 space-y-5">
+            <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-5">
+                <div className="col-span-3 space-y-5">
                     <div className="flex justify-between">
                         <p className="w-[33%] my-auto font-semibold">Service Name* : </p>
                         <FormControl sx={{ width: "66%" }}>
@@ -62,18 +90,14 @@ const ProcessSetup = () => {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="Service Name"
-                            // value={selectedCountry}
-                            // onChange={(e) => setSelectedCountry(e.target.value)}
+                                value={selectedServices}
+                                onChange={(e) => setSelectedServices(e.target.value)}
                             >
-                                {/* {
-                                countries.map((country, index) => <MenuItem key={index} value={country}>{country}</MenuItem>)
-                            } */}
-                                <MenuItem>OEMS</MenuItem>
-                                <MenuItem>OEMS2</MenuItem>
-                                <MenuItem>OEMS3</MenuItem>
+                                {
+                                    services.map((service) => <MenuItem key={service.id} value={service.name}>{service.name}</MenuItem>)
+                                }
                             </Select>
                         </FormControl>
-
                     </div>
                     <div className="flex justify-between">
                         <p className="w-[33%] pr-3 my-auto font-semibold">Process Name : </p>
@@ -130,9 +154,9 @@ const ProcessSetup = () => {
                         </div>
                     </div>
                 </div>
-            </from>
+            </form>
             <div className="mt-10">
-                <BuyersListTable></BuyersListTable>
+                <ProcessListTable></ProcessListTable>
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const useBuyers = (token) => {
+    console.log(token);
     const { data: buyers = [], isLoading, refetch } = useQuery({
         queryKey: [token],
         queryFn: () =>

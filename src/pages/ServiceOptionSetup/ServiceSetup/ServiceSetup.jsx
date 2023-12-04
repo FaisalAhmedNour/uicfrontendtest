@@ -8,19 +8,17 @@ import {
     FormGroup,
     Checkbox
 } from "@mui/material";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { useState } from "react";
 import ServicesListTable from "./ServicesListTable/ServicesListTable";
+import { createService } from "../../../Services/AuthService";
 
 const ServiceSetup = () => {
 
-    const { getCookie } = useContext(AuthContext);
-
-    const token = getCookie('auth_token');
-
     const [isActive, setIsActive] = useState("No")
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.service_name.value;
         const caption = e.target.caption.value;
@@ -28,21 +26,38 @@ const ServiceSetup = () => {
         const service_type = "test";
         // console.log(name, caption, service_type,isActive);
 
-        fetch('http://api.uicommercial.com/api/create_service', {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                'Authorization': token
-            },
-            body: JSON.stringify({ name, caption, service_type, is_active: isActive, remarks })
-        })
-            .then(result => result.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        try {
+            const result = await createService({ name, caption, service_type, is_active: isActive, remarks });
+            console.log(result);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+
+        // fetch('http://api.uicommercial.com/api/create_service', {
+        //     method: "POST",
+        //     headers: {
+        //         "content-type": "application/json",
+        //         'Authorization': `Bearer ${token}`
+        //     },
+        //     body: JSON.stringify({ name, caption, service_type, is_active: isActive, remarks })
+        // })
+        //     .then(result => result.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     })
+    }
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
     }
 
     return (

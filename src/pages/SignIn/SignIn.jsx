@@ -1,5 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import {
+    Link,
+    useNavigate
+} from "react-router-dom";
+import {
+    useContext,
+    useState
+} from "react";
 import {
     Button,
     Divider,
@@ -10,7 +16,10 @@ import {
     OutlinedInput,
     TextField
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+    Visibility,
+    VisibilityOff
+} from "@mui/icons-material";
 import Swal from 'sweetalert2';
 import { AuthContext } from "../Providers/AuthProvider";
 
@@ -18,7 +27,6 @@ const SignIn = () => {
 
     const { setCookie } = useContext(AuthContext);
     const navigate = useNavigate();
-    // const [user, setUser] = useState()
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
@@ -72,23 +80,8 @@ const SignIn = () => {
                 }
                 else {
                     setIsErrorSignIn(true);
-                    // Swal.fire({
-                    //     title: "Sign in failed",
-                    //     text: data.message,
-                    //     icon: "error",
-                    //     showConfirmButton: false,
-                    //     timer: 2000
-                    // });
                 }
-                console.log(data);
-                // if (data.code) {
-                //     setError(data.message);
-                // }
-                // else {
-                //     localStorage.setItem('loginData', JSON.stringify({ email: data.email, token: data.token }));
-                //     setError('');
-                //     navigate('/');
-                // }
+                // console.log(data);
             })
             .catch(error => {
                 console.log(error);
@@ -159,11 +152,17 @@ const SignIn = () => {
                                             label="Password"
                                         />
                                     </FormControl>
-                                    {passwordError && <span className="ms-4 absolute text-xs text-[red] font-medium -bottom-4">You have to give your password!!!</span>}
+                                    {
+                                        passwordError &&
+                                        <span className="ms-4 absolute text-xs text-[red] font-medium -bottom-4">You have to give your password!!!</span>
+                                    }
                                 </div>
                             </div>
                             <div>
-                                {isErrorSignIn && <span className="text-sm text-[red] font-medium"> Invalid username or password!!!</span>}
+                                {
+                                isErrorSignIn && 
+                                <span className="text-sm text-[red] font-medium"> Invalid username or password!!!</span>
+                                }
                                 <p className="text-center col-span-3 text-[#3075cf]">Forgot your password? <span className="font-semibold hover:underline cursor-pointer">Reset Password</span></p>
                             </div>
                             <Button

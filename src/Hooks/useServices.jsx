@@ -2,14 +2,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const useServices = (token) => {
+const useServices = (token) => {    
+    console.log(token);
     const { data: services = [], isLoading, refetch } = useQuery({
         queryKey: [token],
         queryFn: () =>
             axios
                 .get(`http://api.uicommercial.com/api/services`, {
                     headers: {
-                        'Authorization': token,
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     }
                 })

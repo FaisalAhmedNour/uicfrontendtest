@@ -5,39 +5,37 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { AuthContext } from '../../../Providers/AuthProvider';
-import { useContext } from 'react';
-import useBuyers from '../../../../Hooks/useBuyers';
-
-// function createData(
-//     buyerName,
-//     shortCode,
-//     Country,
-//     isActive
-// ) {
-//     return {
-//         buyerName,
-//         shortCode,
-//         Country,
-//         isActive,
-//     };
-// }
-
-// const rows = [
-//     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//     createData('Eclair', 262, 16.0, 24, 6.0),
-//     createData('Cupcake', 305, 3.7, 67, 4.3),
-//     createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
+import { useEffect, useState } from 'react';
+import { getBuyers } from '../../../../Services/AuthService';   
 
 export default function BuyersListTable() {
 
-    const { getCookie } = useContext(AuthContext);
+    const [buyers, setBuyers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const token = getCookie('auth_token');
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getBuyers();
+                setBuyers(result.data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const [buyers] = useBuyers(token)
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -67,7 +65,7 @@ export default function BuyersListTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {buyers && buyers.map((row) => (
+                    {/* {buyers && buyers.map((row) => (
                         <TableRow
                             key={row.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -82,7 +80,7 @@ export default function BuyersListTable() {
                                 <p className='text-center'>delete edit</p>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ))} */}
                 </TableBody>
             </Table>
         </TableContainer>
